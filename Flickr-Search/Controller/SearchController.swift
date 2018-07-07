@@ -33,16 +33,18 @@ class SearchController: UIViewController, AlertMessage {
             guard let flickerResult = json as? Photos else { return  nil }
             return flickerResult
         }) { [unowned self] result in
-            self.labelLoading.text = ""
-            switch result{
-            case .success(let value):
-                self.updateSearchResult(with: value.photos.photo, nil)
-            case .failure(let error):
-                print(error.debugDescription)
-                self.showAlertWithError((error?.localizedDescription) ?? "Please check your Internet connection or try again.", completionHandler: {[unowned self] status in
-                    guard status else { return }
-                    self.fetchSearchImages()
-                })
+            DispatchQueue.main.async {
+                self.labelLoading.text = ""
+                switch result{
+                case .success(let value):
+                    self.updateSearchResult(with: value.photos.photo, nil)
+                case .failure(let error):
+                    print(error.debugDescription)
+                    self.showAlertWithError((error?.localizedDescription) ?? "Please check your Internet connection or try again.", completionHandler: {[unowned self] status in
+                        guard status else { return }
+                        self.fetchSearchImages()
+                    })
+                }
             }
         }
     }

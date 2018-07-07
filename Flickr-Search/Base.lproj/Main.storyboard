@@ -27,7 +27,7 @@
                                 </connections>
                             </searchBar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HaU-L6-0AO">
-                                <rect key="frame" x="0.0" y="128" width="320" height="352"/>
+                                <rect key="frame" x="0.0" y="120" width="320" height="360"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="AEJ-Ic-8h7">
                                     <size key="itemSize" width="50" height="50"/>
@@ -75,11 +75,11 @@
                         <constraints>
                             <constraint firstItem="S6q-lJ-bgq" firstAttribute="top" secondItem="iUh-mv-KtM" secondAttribute="bottom" id="0lS-JF-lBN"/>
                             <constraint firstItem="HaU-L6-0AO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9E7-V5-upy"/>
-                            <constraint firstItem="HaU-L6-0AO" firstAttribute="top" secondItem="S6q-lJ-bgq" secondAttribute="bottom" constant="8" symbolic="YES" id="E1K-vV-ooH"/>
                             <constraint firstItem="iUh-mv-KtM" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="LQT-1o-Xye"/>
                             <constraint firstItem="S6q-lJ-bgq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="NNm-tc-fYn"/>
                             <constraint firstItem="iUh-mv-KtM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="QVB-6x-Ojn"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="HaU-L6-0AO" secondAttribute="bottom" id="b5h-2u-2B6"/>
+                            <constraint firstItem="HaU-L6-0AO" firstAttribute="top" secondItem="iUh-mv-KtM" secondAttribute="bottom" id="g6b-9J-Qu2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HaU-L6-0AO" secondAttribute="trailing" id="o28-KN-A79"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="S6q-lJ-bgq" secondAttribute="trailing" constant="20" id="vaQ-cP-Hec"/>
                             <constraint firstItem="iUh-mv-KtM" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="z7M-cM-Xsq"/>

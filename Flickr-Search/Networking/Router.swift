@@ -57,7 +57,7 @@ extension Router: SearchTextSpaceRemover{
                         completionHandler(.failure(error))
                         return
                 }
-                print(result)
+                //print(result)
                 completionHandler(.success(result))
             }
         })
