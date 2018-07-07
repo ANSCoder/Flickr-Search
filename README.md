@@ -29,7 +29,7 @@ Images are retrieved by hitting the [Flickr API](https://www.flickr.com/services
 
 ```
 https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=YOUR_FLICKR_API_KEY&format=json&nojsoncallback=1&safe_search=1&text=KEYWORD
-``
+```
 
 - Response includes an array of photo objects, each represented as:
 
