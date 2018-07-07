@@ -13,7 +13,7 @@ It will call request async and display new images based on page count in backgro
 
 - Clone the repo and run Flickr-Search.xcodeproj
 - No pod install or carthage update needed directly use this projects
-- Create a Flickr API key and replace placeholder with key in Router.swift 
+- Create a Flickr API key and replace in line number 15 **flickrKey** with your own key in Router.swift 
 
 ## 🤔 Requirements
 
