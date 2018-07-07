@@ -3,6 +3,7 @@
 This is the basic example for the Flickr image search module. Its will search any keyword based on your keyword and 
 it will display the images with the endless scrolling.
 
+
 ![](https://github.com/ANSCoder/Flickr-Search/blob/master/Flickr-Search/Assets.xcassets/app_work.imageset/app_work.png?raw=true)
 
 Inside this project **UISearchBar** using for type keywords and **UICollectionView** for display search results.
@@ -23,8 +24,13 @@ It will call request async and display new images based on page count in backgro
 ## Flickr API Documentation
 
 Images are retrieved by hitting the [Flickr API](https://www.flickr.com/services/api/flickr.photos.search.html).
-- Search Path: https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=YOUR_FLICKR_API_KEY&
-format=json&nojsoncallback=1&safe_search=1&text=KEYWORD
+
+- **Search Path:**
+
+```
+https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=YOUR_FLICKR_API_KEY&format=json&nojsoncallback=1&safe_search=1&text=KEYWORD
+``
+
 - Response includes an array of photo objects, each represented as:
 
 ``` swift
