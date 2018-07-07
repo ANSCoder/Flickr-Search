@@ -11,6 +11,9 @@ import Foundation
 
 class Router: RequestFlickrImages{
     
+    //Replace your Flickr Key here
+    fileprivate let flickrKey = "3e7cc266ae2b0e0d78e279ce8e361736"
+    
     enum Result<value>{
         case success(value)
         case failure(Error?)
@@ -20,7 +23,7 @@ class Router: RequestFlickrImages{
     
     //MARK: - Make URL here based on keyword & page counts
     fileprivate func getURL_Path(_ pageCount: String, and text: String) -> URL?{
-        guard let urlPath = URL(string: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=3e7cc266ae2b0e0d78e279ce8e361736&format=json&nojsoncallback=1&safe_search=\(pageCount)&text=\(text)") else {
+        guard let urlPath = URL(string: "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(flickrKey)&format=json&nojsoncallback=1&safe_search=\(pageCount)&text=\(text)") else {
             return nil
         }
         return urlPath
