@@ -4,7 +4,7 @@ This is the basic example for the Flickr image search module. Its will search an
 it will display the images with the endless scrolling.
 
 
-![](https://github.com/ANSCoder/Flickr-Search/blob/master/Flickr-Search/Assets.xcassets/app_work.imageset/app_work.png?raw=true)
+![](https://github.com/ANSCoder/Flickr-Search/blob/master/Flickr-Search/Assets.xcassets/app_work.imageset/app_works.png?raw=true)
 
 Inside this project **UISearchBar** using for type keywords and **UICollectionView** for display search results.
 It will call request async and display new images based on page count in backgroud simuntaniously.
