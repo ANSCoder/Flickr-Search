@@ -85,7 +85,7 @@ new data model
 //MARK :- Getting user scroll down event here
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == collectionResult{
-            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= ((scrollView.contentSize.height) - ((scrollView.contentSize.height)/8))){
+            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= (scrollView.contentSize.height)){
                 
                 //Start locading new data from here
                 fetchSearchImages()
