@@ -57,7 +57,7 @@ class SearchController: UIViewController, AlertMessage {
     func updateSearchResult(with photo: [Photo]){
         DispatchQueue.main.async { [unowned self] in
             let newItems = photo
-        
+            
             // update data source
             self.searchPhotos.append(contentsOf: newItems)
             
@@ -73,15 +73,19 @@ extension SearchController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         searchBar.resignFirstResponder()
         
-        router.cancelTask()
+        //Reset old data first befor new search Results
+        resetValuesForNewSearch()
         
-        DispatchQueue.main.async {
-            //Reset old data first befor new search Results
-            self.resetValuesForNewSearch()
-            
-            //Requesting here new keyword
-            self.fetchSearchImages()
+        guard let text = searchBar.text?.removeSpace,
+            text.count != 0  else {
+                labelLoading.text = "Please type keyword to search result."
+                return
         }
+        
+        //Requesting here new keyword
+        fetchSearchImages()
+        
+        labelLoading.text = "Searching Images..."
     }
     
     //MARK: - Clearing here old data search results with current running tasks
@@ -90,7 +94,6 @@ extension SearchController: UISearchBarDelegate{
         router.cancelTask()
         searchPhotos.removeAll()
         collectionResult.reloadData()
-        labelLoading.text = "Searching Images..."
     }
 }
 
