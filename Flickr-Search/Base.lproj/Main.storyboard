@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Fliker Image Search-->
+        <!--Flickr Image Search-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SearchController" customModule="Flickr_Search" customModuleProvider="target" sceneMemberID="viewController">
@@ -86,7 +86,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Fliker Image Search" id="r0c-vp-cci"/>
+                    <navigationItem key="navigationItem" title="Flickr Image Search" id="r0c-vp-cci"/>
                     <connections>
                         <outlet property="collectionResult" destination="HaU-L6-0AO" id="kri-OS-UF1"/>
                         <outlet property="labelLoading" destination="S6q-lJ-bgq" id="Zjw-XH-7iX"/>

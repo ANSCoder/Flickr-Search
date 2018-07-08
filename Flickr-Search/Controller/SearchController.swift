@@ -69,11 +69,15 @@ extension SearchController: UISearchBarDelegate{
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         searchBar.resignFirstResponder()
         
-        //Reset old data first befor new search Results
-        resetValuesForNewSearch()
+        router.cancelTask()
         
-        //Requesting here new keyword
-        fetchSearchImages()
+        DispatchQueue.main.async {
+            //Reset old data first befor new search Results
+            self.resetValuesForNewSearch()
+            
+            //Requesting here new keyword
+            self.fetchSearchImages()
+        }
     }
     
     //MARK: - Clearing here old data search results with current running tasks
@@ -81,8 +85,6 @@ extension SearchController: UISearchBarDelegate{
         pageCount = 0
         searchPhotos.removeAll()
         collectionResult.reloadData()
-        collectionResult.collectionViewLayout.invalidateLayout()
-        router.cancelTask()
         labelLoading.text = "Searching Images..."
     }
 }
