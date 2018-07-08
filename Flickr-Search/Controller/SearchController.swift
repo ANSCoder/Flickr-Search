@@ -37,7 +37,7 @@ class SearchController: UIViewController, AlertMessage {
                 self.labelLoading.text = ""
                 switch result{
                 case .success(let value):
-                    self.updateSearchResult(with: value.photos.photo, nil)
+                    self.updateSearchResult(with: value.photos.photo)
                 case .failure(let error):
                     print(error.debugDescription)
                     self.showAlertWithError((error?.localizedDescription) ?? "Please check your Internet connection or try again.", completionHandler: {[unowned self] status in
@@ -50,7 +50,7 @@ class SearchController: UIViewController, AlertMessage {
     }
     
     //MARK: - Handle response result
-    func updateSearchResult(with photo: [Photo], _ completionHandler: (() -> Void)?){
+    func updateSearchResult(with photo: [Photo]){
         DispatchQueue.main.async { [unowned self] in
             let newItems = photo
             
@@ -60,14 +60,6 @@ class SearchController: UIViewController, AlertMessage {
             //Reloading Collection view Data
             self.collectionResult.reloadData()
         }
-    }
-    
-    fileprivate func collectionIndex(_ newItems: [Photo])-> [IndexPath]{
-        // create new index paths
-        let photoCount = self.searchPhotos.count
-        let (start, end) = (photoCount, newItems.count + photoCount)
-        let indexPaths = (start..<end).map { IndexPath(row: $0, section: 0) }
-        return indexPaths
     }
 }
 
@@ -86,8 +78,10 @@ extension SearchController: UISearchBarDelegate{
     
     //MARK: - Clearing here old data search results with current running tasks
     func resetValuesForNewSearch(){
-        searchPhotos = []
+        pageCount = 0
+        searchPhotos.removeAll()
         collectionResult.reloadData()
+        collectionResult.collectionViewLayout.invalidateLayout()
         router.cancelTask()
         labelLoading.text = "Searching Images..."
     }
@@ -102,6 +96,9 @@ extension SearchController: UICollectionViewDataSource, RequestImages{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
+        guard searchPhotos.count != 0 else {
+            return cell
+        }
         let model = searchPhotos[indexPath.row]
         guard let mediaUrl = model.getImagePath() else {
             return cell
@@ -147,7 +144,7 @@ extension SearchController: UIScrollViewDelegate {
     //MARK :- Getting user scroll down event here
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == collectionResult{
-            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= ((scrollView.contentSize.height) - ((scrollView.contentSize.height)/8))){
+            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= (scrollView.contentSize.height)){
                 
                 //Start locading new data from here
                 fetchSearchImages()
