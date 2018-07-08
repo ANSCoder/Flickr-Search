@@ -11,22 +11,25 @@ import UIKit
 class SearchController: UIViewController, AlertMessage {
     
     fileprivate let downloadQueue = DispatchQueue(label: "Images cache", qos: DispatchQoS.background)
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar!{
+        didSet{
+            searchBar.becomeFirstResponder()
+        }
+    }
     @IBOutlet weak var collectionResult: UICollectionView!
     @IBOutlet weak var labelLoading: UILabel!
     fileprivate var searchPhotos = [Photo]()
-    fileprivate lazy var router = Router()
+    fileprivate let router = Router()
     fileprivate var pageCount = 0
     fileprivate let imageProvider = ImageProvider()
     
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     //MARK: - Request search text
-    @objc func fetchSearchImages(){
+    func fetchSearchImages(){
         pageCount+=1   //Count increment here
         
         router.requestFor(text: searchBar.text ?? "", with: pageCount.description, decode: { json -> Photos? in
@@ -40,6 +43,7 @@ class SearchController: UIViewController, AlertMessage {
                     self.updateSearchResult(with: value.photos.photo)
                 case .failure(let error):
                     print(error.debugDescription)
+                    guard self.router.requestCancelStatus == false else { return }
                     self.showAlertWithError((error?.localizedDescription) ?? "Please check your Internet connection or try again.", completionHandler: {[unowned self] status in
                         guard status else { return }
                         self.fetchSearchImages()
@@ -53,7 +57,7 @@ class SearchController: UIViewController, AlertMessage {
     func updateSearchResult(with photo: [Photo]){
         DispatchQueue.main.async { [unowned self] in
             let newItems = photo
-            
+        
             // update data source
             self.searchPhotos.append(contentsOf: newItems)
             
@@ -83,6 +87,7 @@ extension SearchController: UISearchBarDelegate{
     //MARK: - Clearing here old data search results with current running tasks
     func resetValuesForNewSearch(){
         pageCount = 0
+        router.cancelTask()
         searchPhotos.removeAll()
         collectionResult.reloadData()
         labelLoading.text = "Searching Images..."
@@ -110,7 +115,10 @@ extension SearchController: UICollectionViewDataSource, RequestImages{
         cell.imageResult.image = image
         if image == nil {
             imageProvider.requestImage(from :mediaUrl, completion: { (image) -> Void in
-                collectionView.reloadItems(at: [indexPath])
+                let indexPath_ = collectionView.indexPath(for: cell)
+                if indexPath == indexPath_ {
+                    cell.imageResult.image = image
+                }
             })
         }
         return cell
