@@ -36,7 +36,7 @@ class SearchController: UIViewController, AlertMessage {
                 self.labelLoading.text = ""
                 switch result{
                 case .success(let value):
-                    self.updateSearchResult(with: value.photos.photo, nil)
+                    self.updateSearchResult(with: value.photos.photo)
                 case .failure(let error):
                     print(error.debugDescription)
                     self.showAlertWithError((error?.localizedDescription) ?? "Please check your Internet connection or try again.", completionHandler: {[unowned self] status in
@@ -49,7 +49,7 @@ class SearchController: UIViewController, AlertMessage {
     }
     
     //MARK: - Handle response result
-    func updateSearchResult(with photo: [Photo], _ completionHandler: (() -> Void)?){
+    func updateSearchResult(with photo: [Photo]){
         DispatchQueue.main.async { [unowned self] in
             let newItems = photo
         
@@ -94,6 +94,9 @@ extension SearchController: UICollectionViewDataSource, RequestImages{
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoCell
+        guard searchPhotos.count != 0 else {
+            return cell
+        }
         let model = searchPhotos[indexPath.row]
         guard let mediaUrl = model.getImagePath() else {
             return cell
@@ -142,7 +145,7 @@ extension SearchController: UIScrollViewDelegate {
     //MARK :- Getting user scroll down event here
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == collectionResult{
-            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= ((scrollView.contentSize.height) - ((scrollView.contentSize.height)/8))){
+            if ((scrollView.contentOffset.y + scrollView.frame.size.height) >= (scrollView.contentSize.height)){
                 
                 //Start locading new data from here
                 fetchSearchImages()
