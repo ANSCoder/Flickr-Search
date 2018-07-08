@@ -11,11 +11,15 @@ import UIKit
 class SearchController: UIViewController, AlertMessage {
     
     fileprivate let downloadQueue = DispatchQueue(label: "Images cache", qos: DispatchQoS.background)
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar!{
+        didSet{
+            searchBar.becomeFirstResponder()
+        }
+    }
     @IBOutlet weak var collectionResult: UICollectionView!
     @IBOutlet weak var labelLoading: UILabel!
     fileprivate var searchPhotos = [Photo]()
-    fileprivate lazy var router = Router()
+    fileprivate let router = Router()
     fileprivate var pageCount = 0
     fileprivate let imageProvider = ImageProvider()
     
@@ -39,6 +43,7 @@ class SearchController: UIViewController, AlertMessage {
                     self.updateSearchResult(with: value.photos.photo)
                 case .failure(let error):
                     print(error.debugDescription)
+                    guard self.router.requestCancelStatus == false else { return }
                     self.showAlertWithError((error?.localizedDescription) ?? "Please check your Internet connection or try again.", completionHandler: {[unowned self] status in
                         guard status else { return }
                         self.fetchSearchImages()
@@ -71,8 +76,16 @@ extension SearchController: UISearchBarDelegate{
         //Reset old data first befor new search Results
         resetValuesForNewSearch()
         
+        guard let text = searchBar.text?.removeSpace,
+              text.count != 0  else {
+            labelLoading.text = "Please type keyword to search result."
+            return
+        }
+        
         //Requesting here new keyword
         fetchSearchImages()
+        
+        labelLoading.text = "Searching Images..."
     }
     
     //MARK: - Clearing here old data search results with current running tasks
@@ -81,7 +94,6 @@ extension SearchController: UISearchBarDelegate{
         router.cancelTask()
         searchPhotos.removeAll()
         collectionResult.reloadData()
-        labelLoading.text = "Searching Images..."
     }
 }
 

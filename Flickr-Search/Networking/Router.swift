@@ -13,6 +13,7 @@ class Router: RequestFlickrImages{
     
     //Replace your Flickr Key here
     fileprivate let flickrKey = "3e7cc266ae2b0e0d78e279ce8e361736"
+    var requestCancelStatus = false
     
     enum Result<value>{
         case success(value)
@@ -31,6 +32,7 @@ class Router: RequestFlickrImages{
     
     //MARK: - Cancel all previous tasks
     func cancelTask(){
+        requestCancelStatus = true
         task?.cancel()
     }
     
@@ -54,6 +56,7 @@ extension Router: SearchTextSpaceRemover{
             DispatchQueue.main.async {
                 guard error == nil,
                     let result = photos else {
+                        self.requestCancelStatus = false
                         completionHandler(.failure(error))
                         return
                 }
