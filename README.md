@@ -63,7 +63,7 @@ https://www.flickr.com/services/api/misc.api_keys.html
 ## Keyword search request
 UISearchBar priving for keyword search access.
 
-```
+```swift
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar){
         searchBar.resignFirstResponder()
         
@@ -81,7 +81,7 @@ UISearchBar priving for keyword search access.
 For providing infinite scroll using here UIScrollView Delegate method it will calculate size which required for pagination 
 new data model
 
-```
+```swift
 //MARK :- Getting user scroll down event here
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == collectionResult{
@@ -100,7 +100,7 @@ new data model
 
 ## Generics type Async Network request 
 
-```
+```swift
  router.requestFor(text: searchBar.text ?? "", with: pageCount.description, decode: { json -> Photos? in
         guard let flickerResult = json as? Photos else { return  nil }
         return flickerResult
