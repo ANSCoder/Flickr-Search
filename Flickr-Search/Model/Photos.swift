@@ -30,7 +30,7 @@ protocol PhotoURL {}
 extension PhotoURL where Self == Photo{
     
     func getImagePath() -> URL?{
-        let path = "http://farm\(farm).static.flickr.com/\(server)/\(id)_\(secret).jpg"
+        let path = "http://farm\(self.farm).static.flickr.com/\(self.server)/\(self.id)_\(self.secret).jpg"
         return URL(string: path)
     }
     

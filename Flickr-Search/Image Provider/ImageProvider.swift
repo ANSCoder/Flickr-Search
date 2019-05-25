@@ -47,6 +47,6 @@ protocol RequestImages {}
 
 extension RequestImages where Self == ImageProvider{
     func requestImage(from url: URL, completion: @escaping (_ image: UIImage) -> Void){
-        loadImages(from: url, completion: completion)
+        self.loadImages(from: url, completion: completion)
     }
 }
